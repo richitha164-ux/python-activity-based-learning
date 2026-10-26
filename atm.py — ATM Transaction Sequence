@@ -1,0 +1,46 @@
+balance = float(input("Opening balance: "))
+transactions = input(
+    "Enter transactions, such as D100,W50: "
+).split(",")
+
+accepted = 0
+rejected = 0
+
+for transaction in transactions:
+    transaction = transaction.strip().upper()
+
+    if len(transaction) < 2:
+        print("Rejected: invalid transaction")
+        rejected += 1
+        continue
+
+    kind = transaction[0]
+
+    try:
+        amount = float(transaction[1:])
+    except ValueError:
+        print("Rejected: invalid amount")
+        rejected += 1
+        continue
+
+    if amount <= 0:
+        print("Rejected: amount must be positive")
+        rejected += 1
+    elif kind == "D":
+        balance += amount
+        accepted += 1
+        print("Deposit accepted. Balance:", balance)
+    elif kind == "W" and amount <= balance:
+        balance -= amount
+        accepted += 1
+        print("Withdrawal accepted. Balance:", balance)
+    elif kind == "W":
+        print("Rejected: insufficient balance")
+        rejected += 1
+    else:
+        print("Rejected: use D for deposit or W for withdrawal")
+        rejected += 1
+
+print("Final balance:", round(balance, 2))
+print("Accepted transactions:", accepted)
+print("Rejected transactions:", rejected)

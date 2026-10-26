@@ -1,0 +1,28 @@
+subjects = input("Enter subjects separated by commas: ").split(",")
+first_exam = [float(x) for x in input("First exam marks: ").split()]
+second_exam = [float(x) for x in input("Second exam marks: ").split()]
+
+if len(subjects) != len(first_exam) or len(subjects) != len(second_exam):
+    print("Enter one mark per subject for both exams.")
+else:
+    weak_subjects = 0
+
+    for i in range(len(subjects)):
+        change = second_exam[i] - first_exam[i]
+
+        if change > 0:
+            trend = "improved"
+        elif change < 0:
+            trend = "declined"
+        else:
+            trend = "unchanged"
+
+        print(subjects[i].strip(), trend, "by", abs(change), "marks")
+
+        if second_exam[i] < 40:
+            weak_subjects += 1
+
+    if weak_subjects > 0:
+        print("Overall result: Needs support")
+    else:
+        print("Overall result: No weak subjects")

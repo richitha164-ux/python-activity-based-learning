@@ -1,0 +1,26 @@
+answer_key = input("Enter answer key, separated by spaces: ").upper().split()
+student_answers = input(
+    "Enter student answers; use - for blank: "
+).upper().split()
+
+if len(answer_key) != len(student_answers):
+    print("The number of answers must match the answer key.")
+else:
+    correct = 0
+    incorrect = 0
+    unanswered = 0
+
+    for i in range(len(answer_key)):
+        if student_answers[i] == "-":
+            unanswered += 1
+        elif student_answers[i] == answer_key[i]:
+            correct += 1
+        else:
+            incorrect += 1
+
+    score = correct - incorrect * 0.25
+
+    print("Correct:", correct)
+    print("Incorrect:", incorrect)
+    print("Unanswered:", unanswered)
+    print("Score after negative marking:", round(score, 2))

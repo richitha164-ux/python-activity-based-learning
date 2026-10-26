@@ -1,0 +1,32 @@
+participant_ids = input(
+    "Participant IDs separated by commas: "
+).split(",")
+
+registration_fee = float(input("Registration fee per participant: "))
+sponsorship = float(input("Sponsorship amount: "))
+expenses = [float(x) for x in input(
+    "Expense amounts separated by spaces: "
+).split()]
+
+unique_ids = []
+duplicates = []
+
+for participant in participant_ids:
+    participant = participant.strip()
+
+    if participant in unique_ids:
+        if participant not in duplicates:
+            duplicates.append(participant)
+    else:
+        unique_ids.append(participant)
+
+registration_income = len(unique_ids) * registration_fee
+total_expenses = sum(expenses)
+final_balance = registration_income + sponsorship - total_expenses
+
+print("Unique participants:", len(unique_ids))
+print("Duplicate IDs:", ", ".join(duplicates) if duplicates else "None")
+print("Registration income: Rs.", round(registration_income, 2))
+print("Sponsorship: Rs.", round(sponsorship, 2))
+print("Total expenses: Rs.", round(total_expenses, 2))
+print("Final balance: Rs.", round(final_balance, 2))

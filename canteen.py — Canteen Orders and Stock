@@ -1,0 +1,35 @@
+products = input("Product names separated by commas: ").split(",")
+stock = [int(x) for x in input("Opening stock in the same order: ").split()]
+prices = [float(x) for x in input("Unit prices in the same order: ").split()]
+
+if len(products) != len(stock) or len(stock) != len(prices):
+    print("Product, stock, and price counts must match.")
+else:
+    total_sales = 0
+    order_count = int(input("Number of orders: "))
+
+    for i in range(order_count):
+        order_name = input("Product ordered: ").strip().lower()
+        quantity = int(input("Quantity: "))
+        product_index = -1
+
+        for j in range(len(products)):
+            if products[j].strip().lower() == order_name:
+                product_index = j
+
+        if product_index == -1:
+            print("Order rejected: product not found.")
+        elif quantity <= 0:
+            print("Order rejected: quantity must be positive.")
+        elif quantity > stock[product_index]:
+            print("Order rejected: insufficient stock.")
+        else:
+            stock[product_index] -= quantity
+            bill = quantity * prices[product_index]
+            total_sales += bill
+            print("Order accepted. Bill: Rs.", round(bill, 2))
+
+    print("Total sales: Rs.", round(total_sales, 2))
+
+    for i in range(len(products)):
+        print(products[i].strip(), "remaining stock:", stock[i])

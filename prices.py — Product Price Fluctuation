@@ -1,0 +1,34 @@
+products = input("Product names separated by commas: ").split(",")
+old_prices = [float(x) for x in input("Old prices: ").split()]
+new_prices = [float(x) for x in input("New prices: ").split()]
+threshold = float(input("Flag changes greater than this percent: "))
+
+if len(products) != len(old_prices) or len(products) != len(new_prices):
+    print("Product and price counts must match.")
+else:
+    largest_product = ""
+    largest_change = -1
+
+    for i in range(len(products)):
+        if old_prices[i] <= 0:
+            print(products[i].strip(), "has an invalid old price.")
+            continue
+
+        change = (new_prices[i] - old_prices[i]) / old_prices[i] * 100
+        message = f"{products[i].strip()}: {change:+.2f}%"
+
+        if abs(change) > threshold:
+            message += " - flagged"
+
+        print(message)
+
+        if abs(change) > largest_change:
+            largest_change = abs(change)
+            largest_product = products[i].strip()
+
+    if largest_product:
+        print(
+            "Largest fluctuation:",
+            largest_product,
+            f"({largest_change:.2f}%)"
+        )

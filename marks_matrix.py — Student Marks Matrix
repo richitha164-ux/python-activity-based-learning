@@ -1,0 +1,33 @@
+student_count = int(input("Number of students: "))
+subject_count = int(input("Number of subjects: "))
+
+if student_count < 1 or subject_count < 1:
+    print("Counts must be positive.")
+else:
+    marks = []
+
+    for student in range(student_count):
+        row = [float(x) for x in input(
+            f"Enter marks for student {student + 1}: "
+        ).split()]
+
+        if len(row) != subject_count:
+            print("Enter exactly", subject_count, "marks.")
+            break
+
+        marks.append(row)
+
+    if len(marks) == student_count:
+        for student in range(student_count):
+            average = sum(marks[student]) / subject_count
+            print(f"Student {student + 1} average: {average:.2f}")
+
+        for subject in range(subject_count):
+            total = 0
+
+            for student in range(student_count):
+                total += marks[student][subject]
+
+            average = total / student_count
+            result = " (low average)" if average < 50 else ""
+            print(f"Subject {subject + 1} average: {average:.2f}{result}")
