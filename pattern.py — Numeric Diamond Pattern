@@ -1,14 +1,59 @@
-height = int(input("Enter diamond half-height (1 to 20): "))
+Question
 
-if height < 1 or height > 20:
-    print("Enter a number from 1 to 20.")
-else:
-    for row in range(1, height + 1):
-        spaces = " " * (height - row)
-        numbers = " ".join(str(number) for number in range(1, row + 1))
-        print(spaces + numbers)
+Generate a symmetric number pattern based on a validated half-height.
 
-    for row in range(height - 1, 0, -1):
-        spaces = " " * (height - row)
-        numbers = " ".join(str(number) for number in range(1, row + 1))
-        print(spaces + numbers)
+Algorithm
+
+Read the half-height.
+
+Validate that it is between 1 and 20.
+
+Print rows increasing from 1 to the selected height.
+
+Print rows decreasing back to 1.
+
+Flowchart
+
+Start -> Input height -> Within 1-20? -> Print increasing rows -> Print decreasing rows -> End
+
+Python Code
+
+def numeric_pattern():
+
+    n = int(input("Half-height of diamond (1 to 20): "))
+
+    if n < 1 or n > 20:
+
+        print("Enter a number from 1 to 20.")
+
+        return
+
+    for row in range(1, n + 1):
+
+        print(" " * (n - row) + " ".join(str(x) for x in range(1, row + 1)))
+
+    for row in range(n - 1, 0, -1):
+
+        print(" " * (n - row) + " ".join(str(x) for x in range(1, row + 1)))
+
+ 
+
+numeric_pattern()
+
+Sample Output
+
+Input: 4
+
+   1
+
+  1 2
+
+ 1 2 3
+
+1 2 3 4
+
+ 1 2 3
+
+  1 2
+
+   1

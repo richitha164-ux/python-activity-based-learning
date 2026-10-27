@@ -1,33 +1,73 @@
-shift_count = int(input("Number of shifts: "))
-shifts = []
-valid = True
+Question
 
-for i in range(shift_count):
-    name = input(f"Employee for shift {i + 1}: ")
-    start = int(input("Start hour (0 to 23): "))
-    end = int(input("End hour (1 to 24): "))
+Represent shifts as tuples and detect overlapping shifts assigned to the same employee.
 
-    if start < 0 or end > 24 or start >= end:
-        print("Invalid shift time.")
-        valid = False
-        break
+Algorithm
 
-    shifts.append((name, start, end))
+Read the number of shifts.
 
-if valid:
-    conflict_found = False
+For each shift, read employee name and start/end hours.
+
+Validate the hours.
+
+Compare each pair of shifts for the same employee.
+
+Report overlaps or confirm no conflicts.
+
+Flowchart
+
+Start -> Input shifts -> Valid times? -> Compare pairs -> Same employee and times overlap? -> Report conflict -> More pairs? -> End
+
+Python Code
+
+def shift_conflicts():
+
+    count = int(input("Number of shifts: "))
+
+    shifts = []
+
+    for i in range(count):
+
+        name = input(f"Shift {i + 1} employee name: ")
+
+        start = int(input("Start hour (0-23): "))
+
+        end = int(input("End hour (1-24): "))
+
+        if start < 0 or end > 24 or start >= end:
+
+            print("Invalid shift; enter start < end within 0-24.")
+
+            return
+
+        shifts.append((name, start, end))
+
+    found = False
 
     for i in range(len(shifts)):
+
         for j in range(i + 1, len(shifts)):
+
             name1, start1, end1 = shifts[i]
+
             name2, start2, end2 = shifts[j]
 
             if name1 == name2 and start1 < end2 and start2 < end1:
-                print(
-                    f"Conflict: {name1} has shifts "
-                    f"{start1}-{end1} and {start2}-{end2}"
-                )
-                conflict_found = True
 
-    if not conflict_found:
-        print("No shift conflicts found.")
+                print(f"Conflict: {name1} has overlapping shifts {start1}-{end1} and {start2}-{end2}")
+
+                found = True
+
+    if not found:
+
+        print("No employee shift conflicts found.")
+
+ 
+
+shift_conflicts()
+
+Sample Output
+
+Example shifts: Ravi 9-13; Ravi 12-16; Anu 9-12
+
+Conflict: Ravi has overlapping shifts 9-13 and 12-16

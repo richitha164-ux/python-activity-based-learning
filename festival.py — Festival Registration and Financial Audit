@@ -1,32 +1,85 @@
-participant_ids = input(
-    "Participant IDs separated by commas: "
-).split(",")
+Question 74: Campus Festival Registration and Financial Audit
 
-registration_fee = float(input("Registration fee per participant: "))
-sponsorship = float(input("Sponsorship amount: "))
-expenses = [float(x) for x in input(
-    "Expense amounts separated by spaces: "
-).split()]
+Question
 
-unique_ids = []
-duplicates = []
+Reconcile participant registrations, registration income, sponsorship, and expenses, and calculate the final balance.
 
-for participant in participant_ids:
-    participant = participant.strip()
+Algorithm
 
-    if participant in unique_ids:
-        if participant not in duplicates:
-            duplicates.append(participant)
-    else:
-        unique_ids.append(participant)
+Read participant IDs, fee, sponsorship, and expense amounts.
 
-registration_income = len(unique_ids) * registration_fee
-total_expenses = sum(expenses)
-final_balance = registration_income + sponsorship - total_expenses
+Find unique IDs and duplicates.
 
-print("Unique participants:", len(unique_ids))
-print("Duplicate IDs:", ", ".join(duplicates) if duplicates else "None")
-print("Registration income: Rs.", round(registration_income, 2))
-print("Sponsorship: Rs.", round(sponsorship, 2))
-print("Total expenses: Rs.", round(total_expenses, 2))
-print("Final balance: Rs.", round(final_balance, 2))
+Calculate registration income from unique participants.
+
+Sum expenses and calculate the balance.
+
+Flowchart
+
+Start -> Input registrations and amounts -> Find duplicates -> Calculate income and total expenses -> Balance = income + sponsorship - expenses -> Display audit -> End
+
+Python Code
+
+def festival_audit():
+
+    registrations = input("Participant IDs separated by commas: ").split(",")
+
+    fees = float(input("Registration fee per participant: "))
+
+    sponsorship = float(input("Total sponsorship: Rs. "))
+
+    expenses = [float(x) for x in input("Expense amounts separated by spaces: ").split()]
+
+    unique_ids = []
+
+    duplicates = []
+
+    for person in registrations:
+
+        person = person.strip()
+
+        if person in unique_ids:
+
+            if person not in duplicates:
+
+                duplicates.append(person)
+
+        else:
+
+            unique_ids.append(person)
+
+    collected = len(unique_ids) * fees
+
+    total_expenses = sum(expenses)
+
+    balance = collected + sponsorship - total_expenses
+
+    print(f"Unique participants: {len(unique_ids)}")
+
+    print(f"Duplicate IDs: {', '.join(duplicates) if duplicates else 'None'}")
+
+    print(f"Registration income: Rs. {collected:.2f}")
+
+    print(f"Total funds: Rs. {collected + sponsorship:.2f}")
+
+    print(f"Expenses: Rs. {total_expenses:.2f}")
+
+    print(f"Final balance: Rs. {balance:.2f}")
+
+ 
+
+festival_audit()
+
+Sample Output
+
+Example: IDs P1,P2,P2; fee Rs. 100; sponsorship Rs. 500; expenses Rs. 300 and Rs. 150
+
+Unique participants: 2
+
+Duplicate IDs: P2
+
+Registration income: Rs. 200.00
+
+Total expenses: Rs. 450.00
+
+Final balance: Rs. 250.00

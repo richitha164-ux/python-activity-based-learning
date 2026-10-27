@@ -1,26 +1,66 @@
-answer_key = input("Enter answer key, separated by spaces: ").upper().split()
-student_answers = input(
-    "Enter student answers; use - for blank: "
-).upper().split()
+Question
 
-if len(answer_key) != len(student_answers):
-    print("The number of answers must match the answer key.")
-else:
-    correct = 0
-    incorrect = 0
-    unanswered = 0
+Compare student answers with an answer key, count correct, incorrect, and unanswered items, and apply negative marking.
 
-    for i in range(len(answer_key)):
-        if student_answers[i] == "-":
+Algorithm
+
+Read the answer key and student answers.
+
+Check that both contain the same number of entries.
+
+Compare answers one by one.
+
+Calculate the score with a 0.25 penalty for each incorrect answer.
+
+Flowchart
+
+Start -> Input key and answers -> Same count? -> Compare each answer -> Count correct/wrong/blank -> Calculate score -> Display result -> End
+
+Python Code
+
+def answer_evaluation():
+
+    key = input("Answer key (letters, use - for blank): ").upper().split()
+
+    answers = input("Student answers in same format: ").upper().split()
+
+    if len(key) != len(answers):
+
+        print("Answer count must match the key.")
+
+        return
+
+    correct = incorrect = unanswered = 0
+
+    for i in range(len(key)):
+
+        if answers[i] == "-":
+
             unanswered += 1
-        elif student_answers[i] == answer_key[i]:
+
+        elif answers[i] == key[i]:
+
             correct += 1
+
         else:
+
             incorrect += 1
 
-    score = correct - incorrect * 0.25
+    score = correct - 0.25 * incorrect
 
-    print("Correct:", correct)
-    print("Incorrect:", incorrect)
-    print("Unanswered:", unanswered)
-    print("Score after negative marking:", round(score, 2))
+    print(f"Correct: {correct}; incorrect: {incorrect}; unanswered: {unanswered}")
+
+    print(f"Score after negative marking: {score:.2f}")
+
+ 
+
+answer_evaluation()
+
+Sample Output
+
+Key: A B C D; answers: A C - D
+
+Correct: 2; incorrect: 1; unanswered: 1
+
+Score after negative marking: 1.75
+

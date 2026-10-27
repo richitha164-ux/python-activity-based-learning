@@ -1,28 +1,73 @@
-subjects = input("Enter subjects separated by commas: ").split(",")
-first_exam = [float(x) for x in input("First exam marks: ").split()]
-second_exam = [float(x) for x in input("Second exam marks: ").split()]
+Question
 
-if len(subjects) != len(first_exam) or len(subjects) != len(second_exam):
-    print("Enter one mark per subject for both exams.")
-else:
-    weak_subjects = 0
+Compare subject marks in two examinations, identify improvements and declines, and flag subjects with low marks.
+
+Algorithm
+
+Read subjects and both mark lists.
+
+Confirm the lists have matching lengths.
+
+Compare marks for each subject.
+
+Count subjects below the pass threshold and report the overall support status.
+
+Flowchart
+
+Start -> Input subjects and two mark lists -> Counts match? -> Compare each subject -> Mark below 40? -> Report trends and status -> End
+
+Python Code
+
+def performance_trend():
+
+    subjects = input("Subject names separated by commas: ").split(",")
+
+    first = [float(x) for x in input("First exam marks in same order: ").split()]
+
+    second = [float(x) for x in input("Second exam marks in same order: ").split()]
+
+    if len(subjects) != len(first) or len(first) != len(second):
+
+        print("Enter one mark per subject for both exams.")
+
+        return
+
+    weak_count = 0
 
     for i in range(len(subjects)):
-        change = second_exam[i] - first_exam[i]
+
+        change = second[i] - first[i]
 
         if change > 0:
+
             trend = "improved"
+
         elif change < 0:
+
             trend = "declined"
+
         else:
+
             trend = "unchanged"
 
-        print(subjects[i].strip(), trend, "by", abs(change), "marks")
+        print(f"{subjects[i].strip()}: {trend} by {abs(change):.1f} marks")
 
-        if second_exam[i] < 40:
-            weak_subjects += 1
+        if second[i] < 40:
 
-    if weak_subjects > 0:
-        print("Overall result: Needs support")
-    else:
-        print("Overall result: No weak subjects")
+            weak_count += 1
+
+    print("Overall result:", "Needs support" if weak_count else "No weak subjects")
+
+ 
+
+performance_trend()
+
+Sample Output
+
+Example: Maths 55 to 68; Science 72 to 65
+
+Maths: improved by 13.0 marks
+
+Science: declined by 7.0 marks
+
+Overall result: No weak subjects

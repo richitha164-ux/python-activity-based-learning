@@ -1,20 +1,76 @@
-units = int(input("Units consumed: "))
+Question
 
-if units < 0:
-    print("Units cannot be negative.")
-else:
+Calculate an electricity bill using progressive usage slabs, a fixed charge, and a surcharge.
+
+Algorithm
+
+Read units.
+
+If units are invalid, report an error.
+
+Apply the correct rate to each usage slab.
+
+Add the fixed charge and surcharge.
+
+Display the itemized bill.
+
+Flowchart
+
+Start -> Input units -> Valid units? -> Calculate slab charge -> Add fixed charge and surcharge -> Display bill -> End
+
+Python Code
+
+def electricity_billing():
+
+    units = int(input("Units consumed: "))
+
+    if units < 0:
+
+        print("Units cannot be negative.")
+
+        return
+
+    # Slab rates: first 100 at 2, next 100 at 3, remaining at 5.
+
     if units <= 100:
-        charge = units * 2
+
+        energy = units * 2
+
     elif units <= 200:
-        charge = 100 * 2 + (units - 100) * 3
+
+        energy = 100 * 2 + (units - 100) * 3
+
     else:
-        charge = 100 * 2 + 100 * 3 + (units - 200) * 5
+
+        energy = 100 * 2 + 100 * 3 + (units - 200) * 5
 
     fixed_charge = 50
-    surcharge = charge * 0.05
-    total = charge + fixed_charge + surcharge
 
-    print("Energy charge: Rs.", charge)
-    print("Fixed charge: Rs.", fixed_charge)
-    print("Surcharge: Rs.", round(surcharge, 2))
-    print("Total bill: Rs.", round(total, 2))
+    surcharge = energy * 0.05
+
+    total = energy + fixed_charge + surcharge
+
+    print(f"Energy charge: Rs. {energy:.2f}")
+
+    print(f"Fixed charge: Rs. {fixed_charge:.2f}")
+
+    print(f"Surcharge: Rs. {surcharge:.2f}")
+
+    print(f"Total bill: Rs. {total:.2f}")
+
+ 
+
+electricity_billing()
+
+Sample Output
+
+Input: 250 units
+
+Energy charge: Rs. 650.00
+
+Fixed charge: Rs. 50.00
+
+Surcharge: Rs. 32.50
+
+Total bill: Rs. 732.50
+

@@ -1,34 +1,76 @@
-products = input("Product names separated by commas: ").split(",")
-old_prices = [float(x) for x in input("Old prices: ").split()]
-new_prices = [float(x) for x in input("New prices: ").split()]
-threshold = float(input("Flag changes greater than this percent: "))
+Question
 
-if len(products) != len(old_prices) or len(products) != len(new_prices):
-    print("Product and price counts must match.")
-else:
-    largest_product = ""
+Calculate percentage price changes for several products, flag changes above a threshold, and identify the largest fluctuation.
+
+Algorithm
+
+Read product names, old prices, new prices, and threshold.
+
+Validate list lengths.
+
+Calculate percentage change for each valid old price.
+
+Flag changes above the threshold and track the largest absolute change.
+
+Flowchart
+
+Start -> Input products and prices -> Counts match? -> Calculate each percentage change -> Above threshold? -> Flag -> Track largest -> Display results -> End
+
+Python Code
+
+def price_fluctuation():
+
+    products = input("Product names separated by commas: ").split(",")
+
+    old_prices = [float(x) for x in input("Old prices in same order: ").split()]
+
+    new_prices = [float(x) for x in input("New prices in same order: ").split()]
+
+    threshold = float(input("Flag changes greater than percent: "))
+
+    if len(products) != len(old_prices) or len(old_prices) != len(new_prices):
+
+        print("Product and price counts must match.")
+
+        return
+
+    largest_name = ""
+
     largest_change = -1
 
     for i in range(len(products)):
+
         if old_prices[i] <= 0:
-            print(products[i].strip(), "has an invalid old price.")
+
+            print(f"{products[i].strip()}: old price must be positive")
+
             continue
 
         change = (new_prices[i] - old_prices[i]) / old_prices[i] * 100
-        message = f"{products[i].strip()}: {change:+.2f}%"
 
-        if abs(change) > threshold:
-            message += " - flagged"
-
-        print(message)
+        print(f"{products[i].strip()}: {change:+.2f}%" + (" - flagged" if abs(change) > threshold else ""))
 
         if abs(change) > largest_change:
-            largest_change = abs(change)
-            largest_product = products[i].strip()
 
-    if largest_product:
-        print(
-            "Largest fluctuation:",
-            largest_product,
-            f"({largest_change:.2f}%)"
-        )
+            largest_change = abs(change)
+
+            largest_name = products[i].strip()
+
+    if largest_name:
+
+        print(f"Largest fluctuation: {largest_name} ({largest_change:.2f}%)")
+
+ 
+
+price_fluctuation()
+
+Sample Output
+
+Example: Rice Rs. 50 to Rs. 55; Oil Rs. 100 to Rs. 90; threshold 8%
+
+Rice: +10.00% - flagged
+
+Oil: -10.00% - flagged
+
+Largest fluctuation: Rice (10.00%)
+

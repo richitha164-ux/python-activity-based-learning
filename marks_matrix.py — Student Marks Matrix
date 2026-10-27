@@ -1,33 +1,80 @@
-student_count = int(input("Number of students: "))
-subject_count = int(input("Number of subjects: "))
+Question
 
-if student_count < 1 or subject_count < 1:
-    print("Counts must be positive.")
-else:
-    marks = []
+Store marks in a nested list, calculate each student average and each subject average, and identify low subject averages.
 
-    for student in range(student_count):
-        row = [float(x) for x in input(
-            f"Enter marks for student {student + 1}: "
-        ).split()]
+Algorithm
 
-        if len(row) != subject_count:
-            print("Enter exactly", subject_count, "marks.")
-            break
+Read student and subject counts.
 
-        marks.append(row)
+Enter one row of marks per student.
 
-    if len(marks) == student_count:
-        for student in range(student_count):
-            average = sum(marks[student]) / subject_count
-            print(f"Student {student + 1} average: {average:.2f}")
+Validate each row length.
 
-        for subject in range(subject_count):
-            total = 0
+Calculate row averages and then column averages.
 
-            for student in range(student_count):
-                total += marks[student][subject]
+Flag subject averages below 50.
 
-            average = total / student_count
-            result = " (low average)" if average < 50 else ""
-            print(f"Subject {subject + 1} average: {average:.2f}{result}")
+Flowchart
+
+Start -> Input dimensions -> Enter marks matrix -> Row lengths valid? -> Calculate student averages -> Calculate subject averages -> Flag low averages -> End
+
+Python Code
+
+def marks_matrix():
+
+    students = int(input("Number of students: "))
+
+    subjects = int(input("Number of subjects: "))
+
+    if students < 1 or subjects < 1:
+
+        print("Counts must be positive.")
+
+        return
+
+    matrix = []
+
+    for i in range(students):
+
+        row = [float(x) for x in input(f"Student {i + 1} marks: ").split()]
+
+        if len(row) != subjects:
+
+            print(f"Enter exactly {subjects} marks.")
+
+            return
+
+        matrix.append(row)
+
+    for i in range(students):
+
+        print(f"Student {i + 1} average: {sum(matrix[i]) / subjects:.2f}")
+
+    for j in range(subjects):
+
+        total = 0
+
+        for i in range(students):
+
+            total += matrix[i][j]
+
+        average = total / students
+
+        print(f"Subject {j + 1} average: {average:.2f}" + (" (low)" if average < 50 else ""))
+
+ 
+
+marks_matrix()
+
+Sample Output
+
+Example matrix: [80, 70], [60, 40]
+
+Student 1 average: 75.00
+
+Student 2 average: 50.00
+
+Subject 1 average: 70.00
+
+Subject 2 average: 55.00
+

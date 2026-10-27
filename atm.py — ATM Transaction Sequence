@@ -1,46 +1,108 @@
-balance = float(input("Opening balance: "))
-transactions = input(
-    "Enter transactions, such as D100,W50: "
-).split(",")
+Question
 
-accepted = 0
-rejected = 0
+Process a sequence of deposits and withdrawals, maintain the account balance, reject invalid transactions, and summarize accepted and rejected transactions.
 
-for transaction in transactions:
-    transaction = transaction.strip().upper()
+Algorithm
 
-    if len(transaction) < 2:
-        print("Rejected: invalid transaction")
-        rejected += 1
-        continue
+Read opening balance and transaction sequence.
 
-    kind = transaction[0]
+For each transaction, validate its type and amount.
 
-    try:
-        amount = float(transaction[1:])
-    except ValueError:
-        print("Rejected: invalid amount")
-        rejected += 1
-        continue
+Add valid deposits.
 
-    if amount <= 0:
-        print("Rejected: amount must be positive")
-        rejected += 1
-    elif kind == "D":
-        balance += amount
-        accepted += 1
-        print("Deposit accepted. Balance:", balance)
-    elif kind == "W" and amount <= balance:
-        balance -= amount
-        accepted += 1
-        print("Withdrawal accepted. Balance:", balance)
-    elif kind == "W":
-        print("Rejected: insufficient balance")
-        rejected += 1
-    else:
-        print("Rejected: use D for deposit or W for withdrawal")
-        rejected += 1
+Allow withdrawals only when funds are sufficient.
 
-print("Final balance:", round(balance, 2))
-print("Accepted transactions:", accepted)
-print("Rejected transactions:", rejected)
+Display each result and the final summary.
+
+Flowchart
+
+Start -> Input opening balance and transactions -> Process next transaction -> Valid? -> Deposit or sufficient-funds withdrawal? -> Update balance or reject -> More transactions? -> Display summary -> End
+
+Python Code
+
+def atm_sequence():
+
+    balance = float(input("Opening balance: "))
+
+    transactions = input("Transactions (use D for deposit, W for withdrawal; e.g. D100,W50): ").split(",")
+
+    accepted = 0
+
+    rejected = 0
+
+    for entry in transactions:
+
+        entry = entry.strip().upper()
+
+        if len(entry) < 2:
+
+            print("Rejected: invalid transaction", entry)
+
+            rejected += 1
+
+            continue
+
+        kind = entry[0]
+
+        try:
+
+            amount = float(entry[1:])
+
+        except ValueError:
+
+            print("Rejected: invalid amount", entry)
+
+            rejected += 1
+
+            continue
+
+        if amount <= 0:
+
+            print("Rejected: amount must be positive", entry)
+
+            rejected += 1
+
+        elif kind == "D":
+
+            balance += amount
+
+            accepted += 1
+
+            print(f"Deposit Rs. {amount:.2f}; balance Rs. {balance:.2f}")
+
+        elif kind == "W" and amount <= balance:
+
+            balance -= amount
+
+            accepted += 1
+
+            print(f"Withdrawal Rs. {amount:.2f}; balance Rs. {balance:.2f}")
+
+        elif kind == "W":
+
+            print("Rejected: insufficient balance", entry)
+
+            rejected += 1
+
+        else:
+
+            print("Rejected: transaction must start with D or W", entry)
+
+            rejected += 1
+
+    print(f"Final balance: Rs. {balance:.2f}")
+
+    print(f"Accepted: {accepted}; rejected: {rejected}")
+
+ 
+
+atm_sequence()
+
+Sample Output
+
+Example input: opening balance 500; transactions D100,W50,W700
+
+Final balance: Rs. 550.00
+
+Accepted: 2; rejected: 1
+
